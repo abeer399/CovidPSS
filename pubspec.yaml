@@ -65,6 +65,10 @@ flutter:
     - assets/transparent.png
     - assets/Untitled.jpg
     - assets/warning.jpg
+    - assets/boy.png
+    - assets/webnar.jpg
+    - assets/girl.png
+    - assets/safe.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
