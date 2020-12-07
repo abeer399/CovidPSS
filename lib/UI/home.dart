@@ -1,6 +1,13 @@
 import 'package:covidpss/UI/callPsychologist.dart';
+import 'package:covidpss/UI/covid_symptoms.dart';
+import 'package:covidpss/UI/faq.dart';
+import 'package:covidpss/UI/precautionScreen.dart';
+import 'package:covidpss/UI/referal_Service.dart';
+import 'package:covidpss/UI/safe_screen.dart';
+import 'package:covidpss/UI/webinar_screen.dart';
 import 'package:covidpss/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,6 +15,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final swipperlist = ["banners.jpg", "Untitled.jpg"];
+  var lenghts;
+  final swiptext = [
+    "Sindh Government Caring for You",
+    "Call Helpline 1093 of Local Govt "
+        "\nDepartment Sindh for Psychosocial\nSupport and counselling"
+  ];
+
+  @override
+  void initState() {
+    lenghts = swipperlist.length;
+    lenghts = swiptext.length;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.vertical,
         children: [
           Container(
-            height: 200,
+            height: 250,
+            child: Swiper(
+              autoplay: false,
+              itemBuilder: (context, lengths) {
+                return swip(context, lengths);
+              },
+              itemCount: lenghts,
+              // pagination: new SwiperPagination(
+              // margin: EdgeInsetsDirectional.only(top: 40)),
+            ),
           ),
           SizedBox(
             height: 30,
@@ -71,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => navigate(context, PrecautionsScreen()),
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -113,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => navigate(context, FAQScreen()),
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -149,7 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        navigate(context, CovidSymptom());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -193,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => navigate(context, WebinarScreen()),
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -229,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => navigate(context, ReferralService()),
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -272,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsetsDirectional.only(start: 14),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () => navigate(context, SafeScreen()),
                     child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
@@ -312,9 +345,37 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(
             height: 20,
-          )
+          ),
         ],
       ),
     );
+  }
+
+  Widget swip(BuildContext context, len) {
+    return GestureDetector(
+        onTap: () {},
+        child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage(
+                "assets/${swipperlist[len]}",
+              ),
+              fit: BoxFit.cover,
+              colorFilter: new ColorFilter.mode(
+                  Colors.white.withOpacity(0.5), BlendMode.dstATop),
+            )),
+            width: getScreenSize(context).width,
+            child: Container(
+              padding: EdgeInsetsDirectional.only(start: 10, top: 180),
+              child: Text(
+                "${swiptext[len]}",
+                //textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                    color: Colors.grey[700]),
+              ),
+            )));
   }
 }
